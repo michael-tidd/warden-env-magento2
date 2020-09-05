@@ -166,7 +166,6 @@ warden shell -c "while ! nc -z db 3306 </dev/null; do sleep 2; done"
 if [[ ${CLEAN_INSTALL} ]] && [[ ! -f "${WARDEN_WEB_ROOT}/composer.json" ]]; then
   :: Installing meta-package
   warden env exec -T php-fpm composer create-project \
-## -q --no-interaction --prefer-dist --no-install \
       --repository-url=https://repo.magento.com/ "${META_PACKAGE}" /tmp/create-project "${META_VERSION}"
   warden env exec -T php-fpm rsync -a /tmp/create-project/ /var/www/html/
 fi
