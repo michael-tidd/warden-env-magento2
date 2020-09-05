@@ -208,7 +208,8 @@ elif [[ ${CLEAN_INSTALL} ]]; then
       --page-cache=redis \
       --page-cache-redis-server=redis \
       --page-cache-redis-db=1 \
-      --page-cache-redis-port=6379
+      --page-cache-redis-port=6379 \
+      --elasticsearch-host=elasticsearch
 
   :: Configuring application
   warden env exec -T php-fpm cp -n app/etc/env.php app/etc/env.php.warden.php
