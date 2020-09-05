@@ -1,17 +1,17 @@
-<PROJECT_NAME> Magento 2 Application
+Envisa Magento 2 Application
 ========================================================
 
 | Env | FrontURL | AdminURL |
 | --- | :------- | :------- |
-| DEV | https://app.exampleproject.test/  | https://app.exampleproject.test/backend/  |
-| STG | https://stage.exampleproject.com/ | https://stage.exampleproject.com/backend/ |
-| PRD | https://www.exampleproject.com/   | https://www.exampleproject.com/backend/   |
+| DEV | https://app.envisa-magento.test/  | https://app.envisa-magento.test/backend/  |
+| STG | https://stage.envisa-magento.com/ | https://stage.envisa-magento.com/backend/ |
+| PRD | https://www.envisa-magento.com/   | https://www.envisa-magento.com/backend/   |
 
 Other useful URLs on DEV:
 
 * https://mailhog.warden.test/
-* https://rabbitmq.exampleproject.test/
-* https://elasticsearch.exampleproject.test/
+* https://rabbitmq.envisa-magento.test/
+* https://elasticsearch.envisa-magento.test/
 
 ## Developer Setup
 
@@ -22,22 +22,20 @@ Other useful URLs on DEV:
 
 ### Initializing Environment
 
-In the below examples `~/Sites/exampleproject` is used as the path. Simply replace this with whatever path you will be running this project from. It is recommended however to deploy the project locally to a case-sensitive volume.
+In the below examples `~/Sites/envisa-magento` is used as the path. Simply replace this with whatever path you will be running this project from. It is recommended however to deploy the project locally to a case-sensitive volume.
 
  1. Clone the project codebase.
 
-        git clone -b develop git@github.com:<GITHUB_ACCOUNT>/<REPOSITORY_NAME>.git \
-            ~/Sites/exampleproject
+        git clone -b develop git@github.com:michael-tidd/warden-env-magento2.git \
+            ~/Sites/envisa-magento
 
  2. Change into the project directory.
 
-        cd ~/Sites/exampleproject
+        cd ~/Sites/envisa-magento
 
  3. Configure composer credentials.
 
-        composer config -f ./webroot/composer.json http-basic.repo.magento.com <username> <password>
-
-     If you don't have `composer` installed on the host machine, manually create `webroot/auth.json` using the following template:
+     Manually create `webroot/auth.json` using the following template:
 
         {
             "http-basic": {
@@ -49,8 +47,14 @@ In the below examples `~/Sites/exampleproject` is used as the path. Simply repla
         }
 
  4. Run the init script to bootstrap the environment, starting the containers and mutagen sync (on macOS), installing the database (or importing if `--db-dump` is specified), and creating the local admin user for accessing the Magento backend.
-
-        warden bootstrap --clean-install
+    
+    To install a Magento 2 Community Environment:
+        
+        warden bootstrap --clean-install --meta-package magento/project-community-edition
+    
+    To install a Magento 2 Enterprise Environment:
+        
+        warden bootstrap --clean-install --meta-package magento/project-enterprise-edition
 
  5. Load the site in your browser using the links and credentials taken from the init script output. 
 
