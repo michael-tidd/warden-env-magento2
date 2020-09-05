@@ -165,7 +165,8 @@ warden shell -c "while ! nc -z db 3306 </dev/null; do sleep 2; done"
 
 if [[ ${CLEAN_INSTALL} ]] && [[ ! -f "${WARDEN_WEB_ROOT}/composer.json" ]]; then
   :: Installing meta-package
-  warden env exec -T php-fpm composer create-project -q --no-interaction --prefer-dist --no-install \
+  warden env exec -T php-fpm composer create-project \
+## -q --no-interaction --prefer-dist --no-install \
       --repository-url=https://repo.magento.com/ "${META_PACKAGE}" /tmp/create-project "${META_VERSION}"
   warden env exec -T php-fpm rsync -a /tmp/create-project/ /var/www/html/
 fi
@@ -181,8 +182,8 @@ if [[ ${DB_IMPORT} ]]; then
   pv "${DB_DUMP}" | gunzip -c | warden db import
 elif [[ ${CLEAN_INSTALL} ]]; then
   :: Installing application
-  warden env exec -- -T php-fpm rm -vf app/etc/config.php app/etc/env.php
-  warden env exec -- -T php-fpm cp app/etc/env.php.init.php app/etc/env.php
+  ## warden env exec -- -T php-fpm rm -vf app/etc/config.php app/etc/env.php
+  ## warden env exec -- -T php-fpm cp app/etc/env.php.init.php app/etc/env.php
   warden env exec -- -T php-fpm bin/magento setup:install \
       --cleanup-database \
       --backend-frontname=backend \
