@@ -22,7 +22,7 @@ DB_DUMP="${DB_DUMP:-./backfill/magento-db.sql.gz}"
 DB_IMPORT=1
 CLEAN_INSTALL=
 AUTO_PULL=1
-META_PACKAGE="magento/project-community-edition"
+META_PACKAGE="magento/project-enterprise-edition"
 META_VERSION=""
 URL_FRONT="https://${TRAEFIK_SUBDOMAIN}.${TRAEFIK_DOMAIN}/"
 URL_ADMIN="https://${TRAEFIK_SUBDOMAIN}.${TRAEFIK_DOMAIN}/backend/"
@@ -181,8 +181,8 @@ if [[ ${DB_IMPORT} ]]; then
   pv "${DB_DUMP}" | gunzip -c | warden db import
 elif [[ ${CLEAN_INSTALL} ]]; then
   :: Installing application
-  warden env exec -- -T php-fpm rm -vf app/etc/config.php app/etc/env.php
-  warden env exec -- -T php-fpm cp app/etc/env.php.init.php app/etc/env.php
+##  warden env exec -- -T php-fpm rm -vf app/etc/config.php app/etc/env.php
+##  warden env exec -- -T php-fpm cp app/etc/env.php.init.php app/etc/env.php
   warden env exec -- -T php-fpm bin/magento setup:install \
       --cleanup-database \
       --backend-frontname=backend \
